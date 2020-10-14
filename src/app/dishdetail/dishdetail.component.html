@@ -20,6 +20,7 @@
         <p>{{dish.description}}</p>
       </mat-card-content>
       <mat-card-actions>
+        <button mat-button (click)="goBack()">BACK</button>
         <button mat-button>LIKE</button>
         <button mat-button>SHARE</button>
       </mat-card-actions>
@@ -27,13 +28,8 @@
   </div>
 
   <div fxFlex="40">
-    <!-- <p>Display the list of comments here</p> -->
+    <h1> Comments </h1> 
         <mat-list role="list" *ngFor="let dish of dish.comments">
-          <mat-card-header>
-            <mat-card-title>
-              <h2>Comment</h2>
-            </mat-card-title>
-          </mat-card-header>
           <mat-list-item >{{dish.comment}} </mat-list-item>
           <mat-list-item >{{dish.rating}} Stars</mat-list-item>
           <mat-list-item >-- {{dish.author}} {{dish.date | date}}</mat-list-item>
