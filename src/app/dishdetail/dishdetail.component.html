@@ -8,7 +8,7 @@
     fxLayoutGap.xs="0">
 
   <div fxFlex="40">
-    <p>Display the details of the Dish here</p>
+    <!-- <p>Display the details of the Dish here</p> -->
     <mat-card   *ngIf="dish">
       <mat-card-header>
         <mat-card-title>
@@ -27,8 +27,8 @@
   </div>
 
   <div fxFlex="40">
-    <p>Display the list of comments here</p>
-    <h2>Comments</h2>
+    <!-- <p>Display the list of comments here</p>
+    <h2>Comments</h2> -->
         <mat-list role="list" *ngFor="let dish of dish.comments">
           <mat-list-item >{{dish.comment}} </mat-list-item>
           <mat-list-item >{{dish.rating}} Stars</mat-list-item>
