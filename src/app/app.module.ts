@@ -28,8 +28,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms'; 
-
+import { FormsModule } from '@angular/forms';
+import { AddCommentComponent } from './add-comment/add-comment.component'; 
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FormsModule } from '@angular/forms';
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatFormFieldModule, 
     MatInputModule,
+    MatSliderModule,
     MatCheckboxModule,
     AppRoutingModule,
     FormsModule,
