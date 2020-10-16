@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { DishService } from '../services/dish.service';
+import { Dish } from '../shared/dish';
+
+
 
 @Component({
   selector: 'app-addcomment',
@@ -8,22 +12,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddCommentComponent implements OnInit {
   commentForm: FormGroup;
+  newComment: Comment;
+  data: Array<Dish>;
+  @Input() selectedFeatures: any = [];
+  
+  date  = new Date();
+  @ViewChild('fform') commentsFormDirective;
   formErrors = {
-    'name': '',
+    'author': '',
     'comment': '',
-    'date': '',
     'rating':''
   };
  
   validationMessages = {
-    'name': {
+    'author': {
       'required':      ' Name is required.',
       'minlength':     ' Name must be at least 2 characters long.',
       'maxlength':     ' cannot be more than 25 characters long.'
     },
     'comment': {
       'required':      'comment is required.',
-      'minlength':     'comment must be at least 2 characters long.',
+      'minlength':     'comment must be enter here.',
       'maxlength':     'comment cannot be more than 25 characters long.'
     },
     'rating': {
@@ -31,14 +40,14 @@ export class AddCommentComponent implements OnInit {
       'pattern':       'rating must contain only numbers.'
     }
   };
-
-  constructor(private fb: FormBuilder) {  this.createForm(); }
+  
+  constructor(private fb: FormBuilder,private dishservice: DishService) {  this.createForm(); }
   createForm() : void{
    
     this.commentForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      rating: ['', [Validators.required, Validators.pattern] ],
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+      comment: ['', [Validators.required, Validators.maxLength(50)] ],
+      rating: [0, [Validators.required] ],
     });
     this.commentForm.valueChanges
     .subscribe(data => this.onValueChanged(data));
@@ -66,8 +75,21 @@ export class AddCommentComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit() {
-    console.log('User: ', this.commentForm);
-    
+    this.newComment = (this.commentForm.value);
+    this.selectedFeatures.push(this.newComment) ;
+    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+    var d = new Date();
+    var n = d.toLocaleDateString("en-US", options);
+    document.getElementById("demo1").innerHTML = n;
+    // document.getElementById("demo1").innerHTML = this.selectedFeatures.push(this.newComment);
+    //  this.dishservice.createUser(this.newComment).subscribe(data => { });
+    console.log(this.newComment);
+    this.commentForm.reset({
+      author: '',
+      comment: '',
+      rating: '',
+    });
+    this.commentsFormDirective.resetForm();
   }
  
 }
