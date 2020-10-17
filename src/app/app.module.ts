@@ -31,6 +31,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AddCommentComponent } from './add-comment/add-comment.component'; 
 import {MatSliderModule} from '@angular/material/slider';
+import { HttpClientModule } from '@angular/common/http';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { baseURL } from './shared/baseurl';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 @NgModule({
   declarations: [
@@ -60,12 +64,15 @@ import {MatSliderModule} from '@angular/material/slider';
     MatFormFieldModule, 
     MatInputModule,
     MatSliderModule,
+    MatProgressSpinnerModule,
     MatCheckboxModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DishService,PromotionService,LeaderService],
+  providers: [DishService,PromotionService,LeaderService,ProcessHTTPMsgService,
+    {provide: 'BaseURL', useValue: baseURL}],
   entryComponents: [LoginComponent],
   bootstrap: [AppComponent]
 })

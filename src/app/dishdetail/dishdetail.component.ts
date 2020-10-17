@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import {  Params ,ActivatedRoute } from '@angular/router';
 import { DishService } from '../services/dish.service';
 import { Dish } from '../shared/dish';
@@ -21,6 +21,8 @@ export class DishdetailComponent implements OnInit {
   newComment: Comment;
   selectedFeatures: any = [];
   date  = new Date();
+  errMess: string;
+  dishcopy: Dish;
 
   @ViewChild('fform') commentsFormDirective;
 
@@ -48,7 +50,8 @@ export class DishdetailComponent implements OnInit {
   };
   constructor(private dishservice: DishService,
     private route: ActivatedRoute,
-    private location: Location,private fb: FormBuilder) { this.createForm();}
+    private location: Location,private fb: FormBuilder,
+    @Inject('BaseURL') private BaseURL) { this.createForm();}
 
     createForm() : void{
    
@@ -88,7 +91,7 @@ export class DishdetailComponent implements OnInit {
     this.dishservice.getDish(id).subscribe(dishes => this.dish = dishes);
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+    .subscribe(dish => { this.dish = dish;this.dishcopy = dish; this.setPrevNext(dish.id); },errmess => this.errMess = <any>errmess);
   }
 
   setPrevNext(dishId: string) {
@@ -101,19 +104,16 @@ export class DishdetailComponent implements OnInit {
     this.location.back();
   }
   onSubmit() {
-    var options = { year: 'numeric', month: 'short', day: 'numeric' };
-    var d = new Date();
-    var n = d.toLocaleDateString("en-US", options);
-    document.getElementById("demo").innerHTML =  n;
     this.newComment = this.commentForm.value;
+    this.newComment.date = new Date().toISOString();
     console.log(this.newComment);
-    this.dish.comments.push(this.newComment)+ (document.getElementById("demo").innerHTML =  n);
+    this.dish.comments.push(this.newComment);
+    this.commentsFormDirective.resetForm();
     this.commentForm.reset({
       author: '',
       comment: '',
       rating: '',
     });
-    this.commentsFormDirective.resetForm();
   }
  
 }
