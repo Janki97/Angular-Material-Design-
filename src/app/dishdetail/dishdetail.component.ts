@@ -107,7 +107,12 @@ export class DishdetailComponent implements OnInit {
     this.newComment = this.commentForm.value;
     this.newComment.date = new Date().toISOString();
     console.log(this.newComment);
-    this.dish.comments.push(this.newComment);
+    this.dishcopy.comments.push(this.newComment);
+    this.dishservice.putDish(this.dishcopy)
+    .subscribe(dish => {
+      this.dish = dish; this.dishcopy = dish;
+    },
+    errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
     this.commentsFormDirective.resetForm();
     this.commentForm.reset({
       author: '',
