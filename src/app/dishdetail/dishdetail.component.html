@@ -7,9 +7,9 @@
     fxLayoutGap="10px" 
     fxLayoutGap.xs="0">
 
-  <div fxFlex="40">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
     <!-- <p>Display the details of the Dish here</p> -->
-    <mat-card   *ngIf="dish">
+    <mat-card>
       <mat-card-header>
         <mat-card-title>
           <h3>{{dish.name | uppercase}}</h3>
@@ -31,13 +31,17 @@
     </mat-card>
   </div>
 
-  <div fxFlex="40">
-    <h1> Comments </h1> 
-        <mat-list role="list" *ngFor="let dish of dish.comments">
-          <mat-list-item >{{dish.comment}} </mat-list-item>
-          <mat-list-item >{{dish.rating}} Stars</mat-list-item>
-          <mat-list-item >-- {{dish.author}} {{dish.date | date}}</mat-list-item>
-        
+  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
+   
+        <mat-list>
+          <h1> Comments </h1> 
+          <mat-list-item  *ngFor="let dish of dish.comments">
+            <h4 matLine>{{dish.comment}}</h4>
+            <p matLine>{{dish.rating}} Stars</p> 
+            <p matLine>
+              <span>-- {{dish.author}} {{dish.date | date}}</span>
+            </p>
+          </mat-list-item>
         </mat-list>
        
         <form class="example-form" id="demo" [formGroup]="commentForm" #fform="ngForm" (ngSubmit)="onSubmit()">
