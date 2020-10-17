@@ -35,6 +35,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { baseURL } from './shared/baseurl';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { HighlightDirective } from './directives/highlight.directive';
+import { FeedbackService } from './services/feedback.service';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [DishService,PromotionService,LeaderService,ProcessHTTPMsgService,
+  providers: [DishService,PromotionService,LeaderService,ProcessHTTPMsgService,FeedbackService,
     {provide: 'BaseURL', useValue: baseURL}],
   entryComponents: [LoginComponent],
   bootstrap: [AppComponent]
